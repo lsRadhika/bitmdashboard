@@ -1,0 +1,61 @@
+from flask import Flask, render_template, request, jsonify, send_from_directory
+import cv2
+import os
+import logging
+from datetime import datetime
+
+app = Flask(__name__)
+
+# Configure logging
+logging.basicConfig(level=logging.DEBUG)
+
+# Directory to save captured images
+CAPTURED_IMAGES_DIR = 'captured_images'
+os.makedirs(CAPTURED_IMAGES_DIR, exist_ok=True)
+
+@app.route('/')
+def index():
+    app.logger.debug('Rendering index.html')
+    return render_template('index.html')
+
+@app.route('/capture', methods=['POST'])
+def capture():
+    app.logger.debug('Capture endpoint hit')
+    try:
+        # Initialize the webcam
+        cap = cv2.VideoCapture(0)
+        app.logger.debug('Webcam initialized')
+
+        if not cap.isOpened():
+            app.logger.error('Could not open webcam')
+            return jsonify({"error": "Could not open webcam."}), 500
+
+        # Read a frame from the webcam
+        ret, frame = cap.read()
+        app.logger.debug(f'Read frame: {ret}')
+
+        if not ret:
+            cap.release()
+            app.logger.error('Could not read frame from webcam')
+            return jsonify({"error": "Could not read frame from webcam."}), 500
+
+        # Generate a unique filename based on the current timestamp
+        filename = f'captured_image_{datetime.now().strftime("%Y%m%d_%H%M%S%f")}.jpg'
+        filepath = os.path.join(CAPTURED_IMAGES_DIR, filename)
+        cv2.imwrite(filepath, frame)
+        app.logger.debug(f'Image saved to {filepath}')
+        cap.release()
+        
+        return jsonify({"message": "Your image has been captured.", "filename": filename})
+
+    except Exception as e:
+        app.logger.exception('Exception occurred during capture')
+        return jsonify({"error": str(e)}), 500
+
+@app.route('/images/<filename>')
+def images(filename):
+    app.logger.debug(f'Serving image: {filename}')
+    return send_from_directory(CAPTURED_IMAGES_DIR, filename)
+
+if __name__ == "__main__":
+    app.run(debug=True)

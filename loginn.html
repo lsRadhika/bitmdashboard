@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Login</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background-image: url('college.jpg'); /* Background image */
+            background-size: cover; /* Cover the entire viewport */
+        }
+
+        .login-container {
+            background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white background */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 300px;
+            text-align: center;
+        }
+
+        h1, h2 {
+            margin-bottom: 20px;
+            font-size: 24px;
+            color: #333;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        label {
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+
+        input {
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+
+        button {
+            padding: 10px;
+            background-color: #5cb85c;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #4cae4c;
+        }
+
+        #message {
+            margin-top: 20px;
+        }
+
+        /* Styling for background blur text */
+        .background-text {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 60px;
+            color: red;
+            font-weight: bold;
+            z-index: -1;
+            opacity: 0.1;
+        }
+    </style>
+</head>
+<body>
+    <div class="background-text">RPVR</div>
+    <div class="login-container">
+        <h1>Student Login 👦🏻</h1>
+        <form id="loginForm">
+            <label for="email">Email: 📧</label>
+            <input type="email" id="email" name="email" required>
+
+            <label for="password">Password: 🔑</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Login</button>
+        </form>
+        <div id="message"></div>
+    </div>
+
+    <script>
+        // Hardcoded CSV data as a JSON array
+        const csvData = [
+            { "email": "radhika@123.com", "password": "123" },
+            { "email": "pavithra@222.com", "password": "222" },
+            { "email": "anusha@333.com", "password": "333" },
+            { "email": "vaishnavi@331.com", "password": "331" },
+            { "email": "vysiri@332.com", "password": "332" },
+	    { "email": "bhupal@001.com", "password": "001" },
+	    { "email": "basavaraj@002.com", "password": "002" },
+	    { "email": "prithvi.com", "password": "003" }
+		
+        ];
+
+        document.getElementById('loginForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const email = document.getElementById('email').value;
+            const password = document.getElementById('password').value;
+            let loginSuccessful1 = false;
+            let loginSuccessful2 = false;
+            const messageElement = document.getElementById('message');
+
+            // Checking against firstUser
+            if (email === csvData[0].email && password === csvData[0].password) {
+                loginSuccessful1 = true;
+                messageElement.style.color = 'green';
+                messageElement.innerText = 'Login successful!';
+                window.location.href = 'index.html';
+            }
+
+            // Checking against secondUser
+            else if (email === csvData[1].email && password === csvData[1].password) {
+                loginSuccessful2 = true;
+                messageElement.style.color = 'green';
+                messageElement.innerText = 'Login successful!';
+                window.location.href = 'index1.html';
+            }
+	    else if (email === csvData[2].email && password === csvData[2].password) {
+                loginSuccessful2 = true;
+                messageElement.style.color = 'green';
+                messageElement.innerText = 'Login successful!';
+                window.location.href = 'index2.html';
+            }
+	    else if (email === csvData[3].email && password === csvData[3].password) {
+                loginSuccessful2 = true;
+                messageElement.style.color = 'green';
+                messageElement.innerText = 'Login successful!';
+                window.location.href = 'index3.html';
+            }
+	    else if (email === csvData[4].email && password === csvData[4].password) {
+                loginSuccessful2 = true;
+                messageElement.style.color = 'green';
+                messageElement.innerText = 'Login successful!';
+                window.location.href = 'index4.html';
+            }
+	    else if (email === csvData[5].email && password === csvData[5].password) {
+                loginSuccessful2 = true;
+                messageElement.style.color = 'green';
+                messageElement.innerText = 'Login successful!';
+                window.location.href = 'aindex1.html';
+            }
+	    else if (email === csvData[6].email && password === csvData[6].password) {
+                loginSuccessful2 = true;
+                messageElement.style.color = 'green';
+                messageElement.innerText = 'Login successful!';
+                window.location.href = 'aindex2.html';
+            }
+	    else if (email === csvData[7].email && password === csvData[7].password) {
+                loginSuccessful2 = true;
+                messageElement.style.color = 'green';
+                messageElement.innerText = 'Login successful!';
+                window.location.href = 'aindex3.html';
+            }
+	    
+
+            // If neither user matches
+            else {
+                messageElement.style.color = 'red';
+                messageElement.innerText = 'Login failed. Please check your credentials.';
+            }
+        });
+    </script>
+</body>
+</html>
